@@ -6,6 +6,8 @@
  * Fourth Task – calculates the average value. All this tasks should print the values to console.
  */
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MultiThreading.Task2.Chaining
 {
@@ -22,6 +24,55 @@ namespace MultiThreading.Task2.Chaining
             Console.WriteLine();
 
             // feel free to add your code
+
+            // The value overflow protection wasn't mentioned in the task description. So, no protection was implemented.
+            var arraySize = 10;
+            var random = new Random();
+            var arrayTask = Task.Run(() =>
+            {
+                var array = new int[arraySize];
+                Console.Write("{0,17}", "Original array:");
+                for (int i = 0; i < arraySize; i++)
+                {
+                    array[i] = random.Next(100);
+                    Console.Write("{0,12}", array[i] + " ");
+                }
+                Console.WriteLine();
+                return array;
+            });
+            var multiplyTask = arrayTask.ContinueWith(arrayTaskResult =>
+            {
+                var array = arrayTaskResult.Result;
+                var multiplier = random.Next(100);
+                Console.Write("{0,17}", "Multiplied array:");
+
+                for (int i = 0; i < arraySize; i++)
+                {
+                    array[i] *= multiplier;
+                    Console.Write("{0,12}", array[i] + " ");
+                }
+                Console.WriteLine();
+
+                return array;
+            });
+            var sortingTask = multiplyTask.ContinueWith(multiplyTaskResult =>
+            {
+                var array = multiplyTaskResult.Result;
+                Array.Sort(array);
+                Console.Write("{0,17}", "Sorted array:");
+
+                for (int i = 0; i < arraySize; i++)
+                {
+                    Console.Write("{0,12}", array[i] + " ");
+                }
+                Console.WriteLine();
+                return array;
+            });
+            var averageTask = sortingTask.ContinueWith(sortingTaskResult =>
+            {
+                Console.WriteLine($"Average value: {sortingTaskResult.Result.Average()}");
+            });
+            averageTask.Wait();
 
             Console.ReadLine();
         }
