@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Too big file to be pushed to github
+04.AnalyzingTools/DumpHomework/MyCalculator.dmp
