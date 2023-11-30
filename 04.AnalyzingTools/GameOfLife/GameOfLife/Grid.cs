@@ -17,7 +17,6 @@ namespace GameOfLife
         private Canvas drawCanvas;
         private Ellipse[,] cellsVisuals;
 
-
         public Grid(Canvas c)
         {
             drawCanvas = c;
@@ -39,7 +38,6 @@ namespace GameOfLife
             InitCellsVisuals();
             UpdateGraphics();
         }
-
 
         public void Clear()
         {
@@ -96,7 +94,6 @@ namespace GameOfLife
                     cellsVisuals[i, j].MouseLeftButtonDown += MouseMove;
                 }
             UpdateGraphics();
-
         }
 
         public static bool GetRandomBoolean()

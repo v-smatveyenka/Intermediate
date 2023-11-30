@@ -12,11 +12,38 @@ namespace GameOfLife
         private readonly DispatcherTimer adTimer;
         private int imgNmb;     // the number of the image currently shown
         private string link;    // the URL where the currently shown ad leads to
-
+        private ImageBrush imageBrush;
+        private BitmapImage[] bitmapImage;
 
         public AdWindow(Window owner)
         {
-            Random rnd = new Random();
+            InitWindow(owner);
+
+            adTimer = new DispatcherTimer();
+
+            InitTimer();
+
+            InitSources();
+
+            SetInitialImageNumber();
+
+            ChangeAds(this, EventArgs.Empty);
+        }
+
+        private void InitSources()
+        {
+            link = "http://example.com";
+            imageBrush = new ImageBrush();
+            bitmapImage = new BitmapImage[]
+            {
+                new BitmapImage(new Uri("ad1.jpg", UriKind.Relative)),
+                new BitmapImage(new Uri("ad2.jpg", UriKind.Relative)),
+                new BitmapImage(new Uri("ad3.jpg", UriKind.Relative))
+            };
+        }
+
+        private void InitWindow(Window owner)
+        {
             Owner = owner;
             Width = 350;
             Height = 100;
@@ -26,30 +53,26 @@ namespace GameOfLife
             Cursor = Cursors.Hand;
             ShowActivated = false;
             MouseDown += OnClick;
+        }
 
-            imgNmb = rnd.Next(1, 3);
-            ChangeAds(this, new EventArgs());
-
+        private void InitTimer()
+        {
             // Run the timer that changes the ad's image 
-            adTimer = new DispatcherTimer();
             adTimer.Interval = TimeSpan.FromSeconds(3);
             adTimer.Tick += ChangeAds;
             adTimer.Start();
         }
 
-        private void OnClick(object sender, MouseButtonEventArgs e)
+        private void SetInitialImageNumber()
         {
-            using (System.Diagnostics.Process.Start(link))
-            {
-                Close();
-            }
+            Random rnd = new Random();
+            imgNmb = rnd.Next(1, 3);
         }
 
-        protected override void OnClosed(EventArgs e)
+        private void OnClick(object sender, MouseButtonEventArgs e)
         {
-            Unsubscribe();
-            adTimer.Stop();
-            base.OnClosed(e);
+            System.Diagnostics.Process.Start(link);
+            Close();
         }
 
         public void Unsubscribe()
@@ -59,33 +82,19 @@ namespace GameOfLife
 
         private void ChangeAds(object sender, EventArgs eventArgs)
         {
-
-            ImageBrush myBrush = new ImageBrush();
-
             switch (imgNmb)
             {
                 case 1:
-                    myBrush.ImageSource =
-                        new BitmapImage(new Uri("ad1.jpg", UriKind.Relative));
-                    Background = myBrush;
-                    link = "http://example.com";
-                    imgNmb++;
-                    break;
                 case 2:
-                    myBrush.ImageSource =
-                        new BitmapImage(new Uri("ad2.jpg", UriKind.Relative));
-                    Background = myBrush;
-                    link = "http://example.com";
                     imgNmb++;
                     break;
                 case 3:
-                    myBrush.ImageSource =
-                        new BitmapImage(new Uri("ad3.jpg", UriKind.Relative));
-                    Background = myBrush;
-                    link = "http://example.com";
                     imgNmb = 1;
                     break;
             }
+
+            imageBrush.ImageSource = bitmapImage[imgNmb - 1];
+            Background = imageBrush;
         }
     }
 }
