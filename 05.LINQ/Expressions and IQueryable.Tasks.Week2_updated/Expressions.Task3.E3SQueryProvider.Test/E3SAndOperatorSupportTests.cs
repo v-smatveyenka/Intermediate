@@ -7,10 +7,10 @@
  * imply the following rules: https://kb.epam.com/display/EPME3SDEV/Telescope+public+REST+for+data#TelescopepublicRESTfordata-FTSRequestSyntax
  */
 
+using Expressions.Task3.E3SQueryProvider.Models.Entities;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Expressions.Task3.E3SQueryProvider.Models.Entities;
 using Xunit;
 
 namespace Expressions.Task3.E3SQueryProvider.Test
@@ -35,7 +35,9 @@ namespace Expressions.Task3.E3SQueryProvider.Test
              */
 
             // todo: create asserts for this test by yourself, because they will depend on your final implementation
-            throw new NotImplementedException("Please implement this test and the appropriate functionality");
+            var result = translator.Translate(expression);
+
+            Assert.Equal("Workstation:(EPRUIZHW006) AND Manager:(John*)", result);
         }
 
         #endregion

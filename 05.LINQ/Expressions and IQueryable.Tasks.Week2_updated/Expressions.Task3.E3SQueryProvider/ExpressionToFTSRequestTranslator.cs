@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Expressions.Task3.E3SQueryProvider.Helpers;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -33,6 +34,20 @@ namespace Expressions.Task3.E3SQueryProvider
 
                 return node;
             }
+
+            if (node.Method.DeclaringType == typeof(string)
+                && QueryHelper.QueryTranslator.ContainsKey(node.Method.Name))
+            {
+                var translatedBrackets = QueryHelper.QueryTranslator[node.Method.Name];
+
+                Visit(node.Object);
+                _resultStringBuilder.Append(translatedBrackets.Left);
+                Visit(node.Arguments[0]);
+                _resultStringBuilder.Append(translatedBrackets.Right);
+
+                return node;
+            }
+
             return base.VisitMethodCall(node);
         }
 
@@ -41,16 +56,24 @@ namespace Expressions.Task3.E3SQueryProvider
             switch (node.NodeType)
             {
                 case ExpressionType.Equal:
-                    if (node.Left.NodeType != ExpressionType.MemberAccess)
-                        throw new NotSupportedException($"Left operand should be property or field: {node.NodeType}");
 
-                    if (node.Right.NodeType != ExpressionType.Constant)
-                        throw new NotSupportedException($"Right operand should be constant: {node.NodeType}");
+                    if (!ValidNodeTypes(node))
+                    {
+                        throw new NotSupportedException("NodeTypes are not supported");
+                    }
 
-                    Visit(node.Left);
+                    var memberAccess = node.Left.NodeType == ExpressionType.MemberAccess ? node.Left : node.Right;
+                    var constant = node.Left.NodeType == ExpressionType.Constant ? node.Left : node.Right;
+
+                    Visit(memberAccess);
                     _resultStringBuilder.Append("(");
-                    Visit(node.Right);
+                    Visit(constant);
                     _resultStringBuilder.Append(")");
+                    break;
+                case ExpressionType.AndAlso:
+                    Visit(node.Left);
+                    _resultStringBuilder.Append($" {QueryHelper.Operator.And} ");
+                    Visit(node.Right);
                     break;
 
                 default:
@@ -75,5 +98,32 @@ namespace Expressions.Task3.E3SQueryProvider
         }
 
         #endregion
+
+        private static bool ValidNodeTypes(BinaryExpression node)
+        {
+            if (node.Left.NodeType != ExpressionType.MemberAccess && node.Left.NodeType != ExpressionType.Constant)
+            {
+                return false;
+            }
+
+            if (node.Right.NodeType != ExpressionType.MemberAccess && node.Right.NodeType != ExpressionType.Constant)
+            {
+                return false;
+            }
+
+            if (node.Left.NodeType == ExpressionType.MemberAccess && node.Right.NodeType != ExpressionType.Constant
+                || node.Left.NodeType == ExpressionType.Constant && node.Right.NodeType != ExpressionType.MemberAccess)
+            {
+                return false;
+            }
+
+            if (node.Right.NodeType == ExpressionType.MemberAccess && node.Left.NodeType != ExpressionType.Constant
+               || node.Right.NodeType == ExpressionType.Constant && node.Left.NodeType != ExpressionType.MemberAccess)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
