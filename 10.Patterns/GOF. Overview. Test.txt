@@ -1,0 +1,69 @@
+1. What is the best definition of a pattern?
+C. Pattern - is a solution to a specific type of problems that occurs repeatedly within a given context.
+2. What is the correct description of software design patterns?
+B. Software design patterns - are solutions which solve commonly occurring problems within a given context in software design, which typically show relationships and interactions between classes or objects.
+3. Which of the following is true about design patterns? 
+D. All the above.
+4. What is the best definition of Behavioral patterns?
+C. These types of patterns are specifically concerned with communication between objects.
+5. Which of the following options are related to Behavioral patterns? Multiple choices available. 
+A. Behavioral patterns are concerned with how objects and classes communicate with each other.
+F. Behavioral patterns describe how different objects work together to accomplish a task.
+6. Which issues from the following code can be solved with Behavioral Patterns? Multiple answers are possible. 
+A. Algorithm implementation contains too many conditional statements.
+D. Class contains hard-coded logic to notify other classes.
+7. Which of the following describe the Command pattern correctly? 
+D. In this pattern a request is wrapped around an object as a command and passed to invoker object.
+8. Which Design Pattern should you use when many related classes differ only in their behavior, or do you need different variants of an algorithm? 
+B. Strategy.
+9. Which Design Pattern should you use when you want to access aggregate object's contents without exposing its internal representation? An aggregate object is an object, which contains a collection of other objects. 
+B. Iterator.
+10. Which Design Pattern should you use when there is a language to interpret, and you can represent statements in the language as abstract syntax trees? 
+C. Interpreter.
+11. Which Design Pattern should you use when objects communicate in well-defined but complex ways? The resulting interdependencies are unstructured and difficult to understand. 
+B. Mediator.
+12. Which Design Pattern should you use when an object can notify other objects without making assumptions about who these objects are? In other words, you do not want these objects to be tightly coupled. 
+C. Observer.
+13. Which Design Pattern should you use when there is more than one object that can handle a request, and the handler is not known a priori? The handler should be ascertained automatically. 
+B. Chain of Responsibility.
+14. Which Design Pattern should you use when object's behavior depends on its state, and it must change its behavior at run-time depending on that state? 
+C. State.
+15. What is the best definition of Creational patterns?
+B. These types of patterns provide an ability to hide creation logic instead of using a new operator.
+16. Which of the following options are related to Creational patterns? Multiple choices available.
+B. Creational patterns hide how instances of classes are created and put together.
+E. Creational patterns encapsulate knowledge of the exact classes the system uses.
+17. Which issues from the following code can be solved with Creational Patterns? Multiple answers are possible. 
+B. Different methods in subclass do semantically similar steps except for creating objects.
+C. Creation code is duplicated in different methods.
+E. Creation logic is sprawled among many classes.
+18. Which pattern creates an object without exposing the creation logic to the client and refers to the newly created object using a common interface? 
+A. Factory Pattern.
+19. Which statement describe the Abstract Factory pattern correctly? 
+B. In this pattern an interface is responsible for creating a factory of related objects without explicitly specifying their classes.
+20. Which Design Pattern should you use when a class wants its subclasses to specify the objects it creates? 
+C. Factory Method.
+21. When there must be exactly one instance of a class, and it must be accessible to clients from a well-known access point which Design Pattern should you use?   
+D. Singleton.
+22. Which Design Pattern should you use when a system should be configured with one of the multiple families of products? 
+B. Abstract Factory.
+23. What is the best definition of Structural patterns?
+A. These types of patterns provide a way to create interfaces and define ways to compose objects to obtain new functionalities.
+24. Which of the following options are related to Structural patterns? Multiple choices available. 
+C. Structural patterns describe the ways to compose objects to realize a new functionality.
+D. Structural patterns show how classes and objects are composed to form larger structures.
+25. Which of the issues from the following code can be solved with Structural Patterns? Multiple answers are possible. 
+A. Algorithm implementation contains too many conditional statements.
+D. Class contains hard-coded logic to notify other classes.
+F. Classes implement the same steps and have different interfaces - this makes client code complicated, because it must work with both interfaces.
+G. Class has a new responsibility which is additional to its base responsibility which makes the class very big.
+26. Which Design Pattern should you use when you want to avoid a permanent binding between an abstraction and its implementation? This might be the case , for example, when the implementation must be selected or switched at run-time. 
+C. Bridge.
+27. Which Design Pattern should you use when you want to represent part-whole hierarchies of objects? 
+B. Composite.
+28. Which Design Pattern should you use when you want to provide a simple interface to a complex subsystem? 
+B. Façade.
+29. Which Design Pattern should you use when an application uses a large number of objects, and the storage costs are high because of the sheer quantity of objects? 
+C. Flyweight.
+30. Which Design Pattern should you use when you want to add responsibilities to individual objects dynamically and transparently, that is, without affecting other objects? 
+C. Decorator.
